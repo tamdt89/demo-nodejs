@@ -1,6 +1,29 @@
 pipeline {
-    agent any
-    
+    agent {
+        kubernetes {
+            yaml '''
+            apiVersion: v1
+            kind: Pod
+            spec:
+            containers:
+            - name: docker
+                image: docker:latest
+                command:
+                - cat
+                tty: true
+                volumeMounts:
+                - mountPath: /var/run/docker.sock
+                name: docker-sock
+            imagePullSecrets:
+                - name: regcred
+            volumes: 
+                - name: docker-sock
+                hostPath:
+                    path: /var/run/docker.sock
+                '''
+    }
+  }
+
     environment {
         DOCKER_CREDENTIALS = 'Dockerhub-TamDT'
         DOCKER_IMAGE_NAME = 'tamdt89/demonodejs'
