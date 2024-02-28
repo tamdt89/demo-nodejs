@@ -2,25 +2,6 @@ pipeline {
   agent any
 
   stages {
-    stage('Run maven') {
-      steps {
-        container('maven') {
-          sh 'mvn -version'
-          sh ' echo Hello World > hello.txt'
-          sh 'ls -last'
-        }
-        container('node') {
-          sh 'npm version'
-          sh 'cat hello.txt'
-          sh 'ls -last'
-        }
-        container('docker') {
-          sh 'docker -v'
-          sh 'cat hello.txt'
-          sh 'ls -last'
-        }
-      }
-    }
     stage('Build image') {
       steps {
         container('docker') {
