@@ -28,6 +28,12 @@ pipeline {
         '''
     }
   }
+
+  environment {
+    DOCKER_CREDENTIALS = credentials('Dockerhub-TamDT')
+    DOCKER_IMAGE_NAME = 'tamdt89/demonodejs'
+  }
+
   stages {
     stage('Run maven') {
       steps {
@@ -49,15 +55,24 @@ pipeline {
       }
     }
   }
-    stages {
-      stage('Build image') {
-        steps {
-            container('docker') {
-            script {
-                sh 'docker build -t tamdt89/demonodejs .'
-            }
-            }
+  stages {
+    stage('Build image') {
+      steps {
+        container('docker') {
+          sh 'docker build -t tamdt89/demonodejs .'
         }
       }
     }
+  }
+
+  stages {
+    stage('Push image') {
+      steps {
+        container('docker') {
+          sh 'docker login -u tamdt89 -p DothanhTam'
+          sh 'docker push tamdt89/demonodejs'
+        }
+      }
+    }
+  }
 }
