@@ -23,6 +23,8 @@ pipeline {
             tty: true
           securityContext:
             runAsUser: 1000
+          imagePullSecets:
+            - name: regcred
           volumes:
             - name: docker-sock
               hostPath:
