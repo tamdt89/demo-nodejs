@@ -22,7 +22,7 @@ pipeline {
             - cat
             tty: true
           securityContext:
-            runAsUser: 10
+            runAsUser: 0
           volumes:
             - name: docker-sock
               hostPath:
