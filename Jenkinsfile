@@ -1,38 +1,5 @@
 pipeline {
-  agent {
-    kubernetes {
-      yaml '''
-        apiVersion: v1
-        kind: Pod
-        spec:
-          serviceAccountName: jenkins
-          containers:
-          - name: maven
-            image: maven:alpine
-            command:
-            - cat
-            tty: true
-          - name: node
-            image: node:16-alpine3.12
-            command:
-            - cat
-            tty: true
-          - name: docker
-            image: docker
-            command:
-            - cat
-            tty: true
-          securityContext:
-            runAsUser: 1000
-          imagePullSecets:
-            - name: regcred
-          volumes:
-            - name: docker-sock
-              hostPath:
-                path: '/var/run/docker.sock'
-            '''
-    }
-  }
+  agent any
 
   stages {
     stage('Run maven') {
