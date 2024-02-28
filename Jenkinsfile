@@ -21,10 +21,12 @@ pipeline {
             command:
             - cat
             tty: true
+          securityContext:
+            runAsUser: 1000
           volumes:
             - name: docker-sock
               hostPath:
-                path: /var/run/docker.sock 
+                path: '/var/run/docker.sock'
             '''
     }
   }
