@@ -49,8 +49,6 @@ pipeline {
         }
       }
     }
-  }
-  stages {
     stage('Build image') {
       steps {
         container('docker') {
@@ -58,9 +56,6 @@ pipeline {
         }
       }
     }
-  }
-
-  stages {
     stage('Push image') {
       steps {
         container('docker') {
