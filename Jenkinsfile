@@ -1,83 +1,48 @@
 pipeline {
-    agent {
-        kubernetes {
-            // Define the podTemplate
-            podTemplate(label: 'docker', containers: [
-                // Define the container with Docker
-                containerTemplate(name: 'docker', image: 'docker:latest', command: 'cat', ttyEnabled: true)
-            ], volumes: [
-                // Define the volume for Docker socket
-                hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
-            ])
-        }
+  agent {
+    kubernetes {
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        spec:
+          containers:
+          - name: maven
+            image: maven:alpine
+            command:
+            - cat
+            tty: true
+          - name: node
+            image: node:16-alpine3.12
+            command:
+            - cat
+            tty: true
+          - name: docker
+            image: docker
+            command:
+            - cat
+            tty: true
+        '''
     }
-    stages {
-        stage('Build and Test') {
-            steps {
-                // Run Docker commands within the Docker container
-                container('docker') {
-                    // Example Docker command
-                    sh 'docker version'
-                }
-            }
+  }
+  stages {
+    stage('Run maven') {
+      steps {
+        container('maven') {
+          sh 'mvn -version'
+          sh ' echo Hello World > hello.txt'
+          sh 'ls -last'
         }
+        container('node') {
+          sh 'npm version'
+          sh 'cat hello.txt'
+          sh 'ls -last'
+        }
+        container('docker') {
+          sh 'docker -v'
+          sh 'cat hello.txt'
+          sh 'ls -last'
+        }
+      }
     }
+  }
 }
-// pipeline {
-//     agent {
-//             kubernetes {
-//                 yaml '''
-//                     apiVersion: v1
-//                     kind: Pod
-//                     spec:
-//                     containers:
-//                     - name: docker
-//                         image: docker:latest
-//                         command:
-//                         - cat
-//                         tty: true
-//                         volumeMounts:
-//                         - mountPath: /var/run/docker.sock
-//                         name: docker-sock
-//                     volumes:
-//                     - name: docker-sock
-//                         hostPath:
-//                         path: /var/run/docker.sock    
-//                     '''
-//              }
-//         }
-
-//     environment {
-//         DOCKER_CREDENTIALS = 'Dockerhub-TamDT'
-//         DOCKER_IMAGE_NAME = 'tamdt89/demonodejs'
-//     }
-    
-//     stages {
-//         stage('Build Docker Image') {
-//             steps {
-//                 script {
-//                     docker.build(DOCKER_IMAGE_NAME, '-f Dockerfile .')
-//                 }
-//             }
-//         }
-        
-//         stage('Push to Docker Hub') {
-//             steps {
-//                 script {
-//                     docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS) {
-//                         docker.image(DOCKER_IMAGE_NAME).push('latest')
-//                     }
-//                 }
-//             }
-//         }
-//     }
-    
-//     post {
-//         success {
-//             echo 'Pipeline executed successfully!'
-//         }
-//         failure {
-//             echo 'Pipeline failed!'
-//         }
-//     }
-// }
