@@ -21,7 +21,7 @@ pipeline {
             command:
             - cat
             tty: true
-        volumes:
+          volumes:
           - name: docker-sock
             hostPath:
               path: /var/run/docker.sock 
