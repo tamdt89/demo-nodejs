@@ -21,6 +21,10 @@ pipeline {
             command:
             - cat
             tty: true
+        volumes:
+          - name: docker-sock
+            hostPath:
+              path: /var/run/docker.sock 
         '''
     }
   }
@@ -45,4 +49,15 @@ pipeline {
       }
     }
   }
+    stages {
+      stage('Build image') {
+        steps {
+            container('docker') {
+            script {
+                sh 'docker build -t tamdt89/demonodejs .'
+            }
+            }
+        }
+      }
+    }
 }
