@@ -29,11 +29,6 @@ pipeline {
     }
   }
 
-  environment {
-    DOCKER_CREDENTIALS = credentials('Dockerhub-TamDT')
-    DOCKER_IMAGE_NAME = 'tamdt89/demonodejs'
-  }
-
   stages {
     stage('Run maven') {
       steps {
