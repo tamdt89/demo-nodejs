@@ -14,10 +14,13 @@ pipeline {
             steps {
                 script {
                     // Đăng nhập vào Docker Hub
-                    docker.withRegistry('https://registry.hub.docker.com', 'tamdtdocker') {
-                        // Đẩy Docker image lên Docker Hub
-                        docker.image('tamdt89/demonodejs:v1').push('latest')
+                    withDockerRegistry(credentialsId: 'tamdtdocker', url: 'https://index.docker.io/v1/') {
+                       docker.image('tamdt89/demonodejs:v1').push('v1')
                     }
+                    // docker.withRegistry('https://registry.hub.docker.com', 'tamdtdocker') {
+                    //     // Đẩy Docker image lên Docker Hub
+                    //     docker.image('tamdt89/demonodejs:v1').push('v1')
+                    // }
                 }
             }
         }
