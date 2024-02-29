@@ -1,21 +1,25 @@
 pipeline {
-  agent { dockerfile true }
+    agent { dockerfile true }
 
-  stages {
-    stage('Build image') {
-      steps {
-        container('docker') {
-          sh 'docker build -t tamdt89/demonodejs .'
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Xây dựng Docker image
+                    docker.build('tamdt89/yodemonodejs:latest')
+                }
+            }
         }
-      }
-    }
-    stage('Push image') {
-      steps {
-        container('docker') {
-          sh 'docker login -u tamdt89 -p DothanhTam'
-          sh 'docker push tamdt89/demonodejs'
+        stage('Push') {
+            steps {
+                script {
+                    // Đăng nhập vào Docker Hub
+                    docker.withRegistry('https://registry.hub.docker.com', 'tamdtdocker') {
+                        // Đẩy Docker image lên Docker Hub
+                        docker.image('tamdt89/demonodejs:latest').push('latest')
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
