@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Xây dựng Docker image
-                    docker.build('tamdt89/demonodejs:latest')
+                    docker.build('tamdt89/demonodejs:v1')
                 }
             }
         }
@@ -16,7 +16,7 @@ pipeline {
                     // Đăng nhập vào Docker Hub
                     docker.withRegistry('https://registry.hub.docker.com', 'tamdtdocker') {
                         // Đẩy Docker image lên Docker Hub
-                        docker.image('tamdt89/demonodejs:latest').push('latest')
+                        docker.image('tamdt89/demonodejs:v1').push('latest')
                     }
                 }
             }
