@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Xây dựng Docker image
-                    docker.build('tamdt89/yodemonodejs:latest')
+                    docker.build('tamdt89/demonodejs:latest')
                 }
             }
         }
