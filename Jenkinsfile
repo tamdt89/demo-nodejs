@@ -1,14 +1,14 @@
 pipeline {
     agent any
     
-    environment {
-        // Đặt các biến môi trường cần thiết, như tên image và tag
-        DOCKER_REGISTRY = "docker.io" // Địa chỉ Docker registry, ở đây là Docker Hub
-        DOCKER_USERNAME = credentials('tamdt-dockerhub') // Tên đăng nhập Docker Hub (sử dụng Jenkins credentials)
-        DOCKER_USERNAME_PSW = credentials('tamdt-dockerhub') // Mật khẩu Docker Hub (sử dụng Jenkins credentials)
-        IMAGE_NAME = "demonodejs" // Tên của image
-        IMAGE_TAG = "latest" // Tag của image
-    }
+    // environment {
+    //     // Đặt các biến môi trường cần thiết, như tên image và tag
+    //     DOCKER_REGISTRY = "docker.io" // Địa chỉ Docker registry, ở đây là Docker Hub
+    //     DOCKER_USERNAME = credentials('tamdt-dockerhub') // Tên đăng nhập Docker Hub (sử dụng Jenkins credentials)
+    //     DOCKER_USERNAME_PSW = credentials('tamdt-dockerhub_PSW') // Mật khẩu Docker Hub (sử dụng Jenkins credentials)
+    //     IMAGE_NAME = "demonodejs" // Tên của image
+    //     IMAGE_TAG = "latest" // Tag của image
+    // }
     
     stages {
         stage('Build') {
