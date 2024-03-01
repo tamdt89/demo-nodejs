@@ -3,6 +3,7 @@ environment {
 registry = "tamdt89/demonodejs"
 registryCredential = 'tamdtdocker'
 dockerImage = ''
+BUILD_NUMBER='1'
 }
 agent any
     stages {
@@ -35,31 +36,3 @@ agent any
     }
 }
 
-// pipeline {
-//     agent { dockerfile true }
-
-//     stages {
-//         stage('Build') {
-//             steps {
-//                 script {
-//                     // Xây dựng Docker image
-//                     docker.build('tamdt89/demonodejs:v1')
-//                 }
-//             }
-//         }
-//         stage('Push') {
-//             steps {
-//                 script {
-//                     // Đăng nhập vào Docker Hub
-//                     withDockerRegistry(credentialsId: 'tamdtdocker', url: 'https://index.docker.io/v1/') {
-//                        docker.image('tamdt89/demonodejs:v1').push('v1')
-//                     }
-//                     // docker.withRegistry('https://registry.hub.docker.com', 'tamdtdocker') {
-//                     //     // Đẩy Docker image lên Docker Hub
-//                     //     docker.image('tamdt89/demonodejs:v1').push('v1')
-//                     // }
-//                 }
-//             }
-//         }
-//     }
-// }
