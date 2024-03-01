@@ -6,11 +6,11 @@ dockerImage = ''
 }
 agent any
     stages {
-        stage('Cloning our Git') {
-            steps {
-                git 'https://github.com/tamdt89/demo-nodejs.git'
-            }
-        }
+        // stage('Cloning our Git') {
+        //     steps {
+        //         git 'https://github.com/tamdt89/demo-nodejs.git'
+        //     }
+        // }
         stage('Building our image') {
             steps{
                 script {
