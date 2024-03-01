@@ -1,16 +1,39 @@
 pipeline {
-    agent { dockerfile true }
+environment {
+registry = "tamdt89/demonodejs"
+registryCredential = 'tamdtdocker'
+dockerImage = ''
+}
+agent any
     stages {
-        stage('Test') {
+        stage('Cloning our Git') {
             steps {
-                sh 'node --version'
-                sh 'svn --version'
+                git 'https://github.com/tamdt89/demo-nodejs.git'
+            }
+        }
+        stage('Building our image') {
+            steps{
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Deploy our image') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push()
+                    }   
+                }
+            }
+        }
+        stage('Cleaning up') {
+            steps{
+                sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
     }
 }
-
-
 
 // pipeline {
 //     agent { dockerfile true }
