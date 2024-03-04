@@ -12,7 +12,7 @@ agent any
         //         git 'https://github.com/tamdt89/demo-nodejs.git'
         //     }
         // }
-        stage('Building our image') {
+        stage('Change DNS') {
             steps{
                 script {
                     resolveDns name: '10.18.8.99'
