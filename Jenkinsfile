@@ -15,7 +15,7 @@ agent any
         stage('Change DNS') {
             steps{
                 script {
-                    resolveDns name: '10.18.8.99'
+                    resolveDns name: 'google.com'
                 }
             }
         }
