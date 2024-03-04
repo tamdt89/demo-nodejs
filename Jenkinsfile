@@ -3,7 +3,7 @@ environment {
 registry = "tamdt89/demonodejs"
 registryCredential = 'tamdtdocker'
 dockerImage = ''
-BUILD_NUMBER='1.1'
+BUILD_NUMBER='1.2'
 }
 agent any
     stages {
@@ -12,6 +12,13 @@ agent any
         //         git 'https://github.com/tamdt89/demo-nodejs.git'
         //     }
         // }
+        stage('Building our image') {
+            steps{
+                script {
+                    resolveDns name: '10.18.8.99'
+                }
+            }
+        }
         stage('Building our image') {
             steps{
                 script {
