@@ -3,7 +3,7 @@ environment {
 registry = "tamdt89/demonodejs"
 registryCredential = 'tamdtdocker'
 dockerImage = ''
-BUILD_NUMBER='1'
+BUILD_NUMBER='1.1'
 }
 agent any
     stages {
